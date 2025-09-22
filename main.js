@@ -1,20 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   const allItems = [
-    {
-      name: "Espresso",
-      category: "Καφές",
-      description: "Δυνατός καφές",
-      price: "2.50",
-      image: "images/espresso.jpg"
-    },
-    {
-      name: "Latte",
-      category: "Ροφήματα",
-      description: "Καφές με γάλα",
-      price: "3.00",
-      image: "images/latte.jpg"
-    }
+    { name: "Espresso", category: "Καφές", description: "Δυνατός καφές", price: "2.50", image: "images/espresso.jpg" },
+    { name: "Latte", category: "Ροφήματα", description: "Καφές με γάλα", price: "3.00", image: "images/latte.jpg" }
   ];
 
   const menuDiv = document.getElementById('menu');
@@ -61,4 +49,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Αρχική εμφάνιση όλων
   displayMenu(allItems);
+
 });
