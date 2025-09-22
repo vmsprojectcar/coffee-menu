@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Κατάλογος Καφετέριας</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Κατάλογος Καφετέριας</h1>
+</header>
+
+<div class="filters" id="filters"></div>
+<div id="menu" class="menu"></div>
+
+<script>
+async function loadProducts() {
+  const res = await fetch('data/products/');
+  const productsFiles = ['sample-product.json']; // για αρχή μόνο
+  const products = [];
+
+  for (const file of productsFiles) {
+    const p = await fetch('data/products/' + file).then(r => r.json());
+    products.push(p);
+  }
+
+  return products;
+}
+
+let allItems = [];
+
+loadProducts().then(items => {
+  allItems = items;
+
+  // Κατηγορίες
+  const categories = [...new Set(allItems.map(i => i.category))];
+  createFilterButtons(categories);
+  displayMenu(allItems);
+});
+
+function createFilterButtons(categories) {
+  const filtersDiv = document.getElementById('filters');
+  filtersDiv.innerHTML = '<button class="active" onclick="filterMenu(\'All\', this)">Όλα</button>';
+  categories.forEach(cat => {
+    const btn = document.createElement('button');
+    btn.textContent = cat;
+    btn.onclick = () => filterMenu(cat, btn);
+    filtersDiv.appendChild(btn);
+  });
+}
+
+function filterMenu(category, btn) {
+  document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  if (category === 'All') displayMenu(allItems);
+  else displayMenu(allItems.filter(item => item.category === category));
+}
+
+function displayMenu(items) {
+  const menuDiv = document.getElementById('menu');
+  menuDiv.innerHTML = '';
+  items.forEach(item => {
+    const div = document.createElement('div');
+    div.classList.add('item');
+    div.innerHTML = `
+      <img src="${item.image}" alt="${item.name}">
+      <h3>${item.name}</h3>
+      <p>${item.description}</p>
+      <strong>${item.price} €</strong>
+    `;
+    menuDiv.appendChild(div);
+  });
+}
+</script>
+</body>
+</html>
