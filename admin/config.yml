@@ -1,6 +1,7 @@
 backend:
   name: git-gateway
-  branch: main # το branch στο GitHub
+  branch: main # Το branch του GitHub
+
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
